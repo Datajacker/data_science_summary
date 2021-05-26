@@ -7,6 +7,7 @@ It concerns the left exclusive join of two tables without primary keys via sql o
 * To address this issue, I have figured out solutions with sql or pandas separately
 
 ## [SQL](https://docs.microsoft.com/en-us/sql/t-sql/language-elements/set-operators-except-and-intersect-transact-sql?view=sql-server-ver15)
+![exclusive join](picture/Capture.PNG)
 
 ## [Pandas](https://pandas.pydata.org/)
 
