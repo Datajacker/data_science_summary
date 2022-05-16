@@ -28,4 +28,18 @@ BEGIN
       where a.Rank = N
       
   );
+<<<<<<< HEAD
 END
+=======
+END
+
+-- 181. Employees Earning More Than Their Managers
+select t1.name as Employee
+from Employee t1, Employee t2
+where t1.managerId = t2.id and t1.salary > t2.salary
+
+select E.name as Employee from Employee E
+join Employee as M
+on E.ManagerId = M.Id
+where E.Salary > M.Salary;
+>>>>>>> bbb5a897a10f907c404fdc28ebcb44fa9f647973
