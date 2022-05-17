@@ -94,3 +94,20 @@ WHERE
         GROUP BY DepartmentId
     )
 ;
+
+-- 185. Department Top Three Salaries
+with t as(
+   select 
+   name, 
+   departmentId,salary,
+   DENSE_RANK() over(PARTITION BY departmentId ORDER BY salary DESC) AS rnk
+ from Employee
+)
+
+select a.name as Department, 
+       t.name as Employee, 
+       t.salary as Salary
+from t
+left join Department a
+on t.departmentId = a.id 
+where rnk < 4
