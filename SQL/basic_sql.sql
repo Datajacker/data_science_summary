@@ -111,3 +111,8 @@ from t
 left join Department a
 on t.departmentId = a.id 
 where rnk < 4
+
+-- 196. Delete Duplicate Emails
+DELETE FROM Person WHERE Id NOT IN 
+(SELECT * FROM(
+    SELECT MIN(Id) FROM Person GROUP BY Email) as p)
