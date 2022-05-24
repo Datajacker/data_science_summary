@@ -116,3 +116,40 @@ where rnk < 4
 DELETE FROM Person WHERE Id NOT IN 
 (SELECT * FROM(
     SELECT MIN(Id) FROM Person GROUP BY Email) as p)
+
+
+-- 262. Trips and Users
+# Write your MySQL query statement below
+with client as (
+select *
+from Users
+where role = 'client' and banned = 'No'),
+driver as(
+select *
+from Users
+where role = 'driver' and banned = 'No'),
+trips_clean as (
+select *
+from Trips
+where request_at between '2013-10-01' and '2013-10-03'
+      and client_id in (select users_id from client)
+      and driver_id in (select users_id from driver)),
+trip_completed as (
+select request_at as 'Day',
+       count(status) as completed
+from trips_clean
+where status = 'completed'
+group by request_at),
+trip_total as (
+select request_at as 'Day',
+       count(status) as total
+from trips_clean
+group by request_at)
+
+select trip_total.Day, ifnull(round(1-trip_completed.completed/trip_total.total, 2), 1) as 'Cancellation Rate'
+from trip_total
+left join trip_completed
+on trip_total.Day = trip_completed.Day
+
+
+
