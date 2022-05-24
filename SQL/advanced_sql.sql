@@ -1,1 +1,1 @@
--- lag and lead functions need to be used with Over(partition by order by x)
+-- lag and lead functions need to be used with Over(partition by y order by x)

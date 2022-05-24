@@ -153,3 +153,16 @@ on trip_total.Day = trip_completed.Day
 
 
 
+-- 511. Game Play Analysis I
+# Write your MySQL query statement below
+with rnk as (
+     select player_id,
+            event_date,
+            rank() over(partition by player_id order by event_date) as 'num'
+     from Activity
+      
+      )
+      
+select player_id, event_date as first_login
+from rnk 
+where num = 1
