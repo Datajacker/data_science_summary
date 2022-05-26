@@ -166,3 +166,30 @@ with rnk as (
 select player_id, event_date as first_login
 from rnk 
 where num = 1
+
+-- 512. Game Play Analysis II
+select a1.player_id, a1.device_id
+from Activity a1
+inner join (
+  select player_id, min(event_date) as event_date
+  from Activity 
+  group by player_id
+) a2 on a1.player_id = a2.player_id and a1.event_date = a2.event_date
+
+select player_id, device_id
+from Activity
+where (player_id, event_date) in (
+  select player_id, min(event_date)
+  from Activity
+  group by player_id
+)
+
+with cte as (
+  select 
+    *, 
+    min(event_date) over(partition by player_id order by event_date asc) as min_event_date
+  from Activity
+)
+select player_id, device_id
+from cte
+where event_date = min_event_date
