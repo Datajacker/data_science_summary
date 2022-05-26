@@ -193,3 +193,9 @@ with cte as (
 select player_id, device_id
 from cte
 where event_date = min_event_date
+
+-- 534. Game Play Analysis III
+select player_id, event_date, 
+    sum(games_played) over(partition by player_id order by event_date) as
+    games_played_so_far
+    from Activity
