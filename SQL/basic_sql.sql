@@ -199,3 +199,21 @@ select player_id, event_date,
     sum(games_played) over(partition by player_id order by event_date) as
     games_played_so_far
     from Activity
+
+-- 550. Game Play Analysis IV
+with a2 as (
+SELECT player_id, MIN(event_date) as first_login
+    FROM Activity
+    GROUP BY player_id),
+b as (
+SELECT a1.player_id
+FROM Activity as a1
+INNER JOIN a2
+    ON a1.player_id = a2.player_id AND a1.event_date - a2.first_login = 1
+    )
+    
+SELECT
+    ROUND(COUNT(DISTINCT b.player_id)/COUNT(DISTINCT a.player_id),2) as fraction
+FROM Activity as a
+LEFT JOIN b 
+ON a.player_id = b.player_id
