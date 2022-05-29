@@ -243,3 +243,17 @@ select id, ranked.company, salary
 from ranked
 inner join selected
 on ranked.company = selected.company and ranked.rnk = selected.rnk
+
+-- Alternative solution
+with cte as (
+    select
+        *,
+        count(*) over(partition by company) as cnt,
+        row_number() over(partition by company order by salary asc) as rw
+    from Employee
+)
+select id, company, salary
+from cte
+where 
+    (cnt % 2 = 0 and rw in (cnt / 2, cnt / 2 + 1)) or
+    (cnt % 2 <> 0 and rw = round(cnt / 2))
