@@ -217,3 +217,29 @@ SELECT
 FROM Activity as a
 LEFT JOIN b 
 ON a.player_id = b.player_id
+
+-- 569. Median Employee Salary
+with ranked as(
+select id, company, salary,
+       row_number() over(partition by company order by salary) as rnk,
+       COUNT(*) OVER (PARTITION BY company) AS cnt
+from Employee
+), -- get the rank and count
+selected as (
+    select company, cnt/2 as rnk  
+    from ranked 
+    where cnt%2 = 0
+    union -- deal with even number
+    select company, cnt/2 + 1 as rnk  
+    from ranked 
+    where cnt%2 = 0
+    union -- deal with odd number of count
+    select company, (cnt+1)/2 as rnk  
+    from ranked 
+    where (cnt+1)%2 = 0
+    )
+    
+select id, ranked.company, salary
+from ranked
+inner join selected
+on ranked.company = selected.company and ranked.rnk = selected.rnk
