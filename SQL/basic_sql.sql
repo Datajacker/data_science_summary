@@ -257,3 +257,24 @@ from cte
 where 
     (cnt % 2 = 0 and rw in (cnt / 2, cnt / 2 + 1)) or
     (cnt % 2 <> 0 and rw = round(cnt / 2))
+
+
+with cte as
+(
+select
+id,
+company,
+salary,
+rank() over(partition by company order by salary asc, id asc) as rnk,
+count(id) over(partition by company) as ttl
+from Employee
+group by 1
+)
+
+select
+id,
+company,
+salary
+from cte
+where ceiling((ttl+1)/2) = rnk
+or floor((ttl+1)/2) = rnk
