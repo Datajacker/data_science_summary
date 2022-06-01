@@ -278,3 +278,17 @@ salary
 from cte
 where ceiling((ttl+1)/2) = rnk
 or floor((ttl+1)/2) = rnk
+
+-- 570. Managers with at Least 5 Direct Reports
+with sorted as (
+select distinct managerId, 
+       count(name) over(partition by managerId) as cnt
+       
+       from Employee)
+       
+       
+       select Employee.name
+       from Employee
+       inner join sorted
+       on Employee.id = sorted.managerId
+       where sorted.cnt >4
