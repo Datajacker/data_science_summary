@@ -9,3 +9,5 @@
 [Creating Confidence Intervals for Machine Learning Classifiers](https://sebastianraschka.com/blog/2022/confidence-intervals-for-ml.html)
 
 [Mathematical Foundations of Monte Carlo Methods](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/monte-carlo-methods-mathematical-foundations)
+
+[Z-score](https://www.had2know.org/academics/normal-distribution-table-z-scores.html)
