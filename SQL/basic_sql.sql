@@ -292,3 +292,18 @@ select distinct managerId,
        inner join sorted
        on Employee.id = sorted.managerId
        where sorted.cnt >4
+
+-- 574. Winning Candidate
+with ranked as (
+ select candidateId,
+        count(id) as cnt
+ from Vote
+ group by candidateId
+ order by cnt desc
+ limit 1
+)
+
+select Candidate.name
+from Candidate
+inner join ranked
+on Candidate.id = ranked.candidateId
