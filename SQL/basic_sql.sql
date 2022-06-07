@@ -218,6 +218,7 @@ FROM Activity as a
 LEFT JOIN b 
 ON a.player_id = b.player_id
 
+
 -- 577. Employee Bonus
 SELECT
     Employee.name, Bonus.bonus
@@ -227,3 +228,94 @@ FROM
     Bonus ON Employee.empid = Bonus.empid
 WHERE
     bonus < 1000 OR bonus IS NULL
+
+-- 569. Median Employee Salary
+with ranked as(
+select id, company, salary,
+       row_number() over(partition by company order by salary) as rnk,
+       COUNT(*) OVER (PARTITION BY company) AS cnt
+from Employee
+), -- get the rank and count
+selected as (
+    select company, cnt/2 as rnk  
+    from ranked 
+    where cnt%2 = 0
+    union -- deal with even number
+    select company, cnt/2 + 1 as rnk  
+    from ranked 
+    where cnt%2 = 0
+    union -- deal with odd number of count
+    select company, (cnt+1)/2 as rnk  
+    from ranked 
+    where (cnt+1)%2 = 0
+    )
+    
+select id, ranked.company, salary
+from ranked
+inner join selected
+on ranked.company = selected.company and ranked.rnk = selected.rnk
+
+-- Alternative solution
+with cte as (
+    select
+        *,
+        count(*) over(partition by company) as cnt,
+        row_number() over(partition by company order by salary asc) as rw
+    from Employee
+)
+select id, company, salary
+from cte
+where 
+    (cnt % 2 = 0 and rw in (cnt / 2, cnt / 2 + 1)) or
+    (cnt % 2 <> 0 and rw = round(cnt / 2))
+
+
+with cte as
+(
+select
+id,
+company,
+salary,
+rank() over(partition by company order by salary asc, id asc) as rnk,
+count(id) over(partition by company) as ttl
+from Employee
+group by 1
+)
+
+select
+id,
+company,
+salary
+from cte
+where ceiling((ttl+1)/2) = rnk
+or floor((ttl+1)/2) = rnk
+
+-- 570. Managers with at Least 5 Direct Reports
+with sorted as (
+select distinct managerId, 
+       count(name) over(partition by managerId) as cnt
+       
+       from Employee)
+       
+       
+       select Employee.name
+       from Employee
+       inner join sorted
+       on Employee.id = sorted.managerId
+       where sorted.cnt >4
+
+-- 574. Winning Candidate
+with ranked as (
+ select candidateId,
+        count(id) as cnt
+ from Vote
+ group by candidateId
+ order by cnt desc
+ limit 1
+)
+
+select Candidate.name
+from Candidate
+inner join ranked
+on Candidate.id = ranked.candidateId
+

@@ -7,14 +7,14 @@
 * [R](https://github.com/ChenshuLiu/Machine-Learning-in-R)
 
 * [Introducing the Facebook Field Guide to Machine Learning video series](https://research.facebook.com/blog/2018/05/the-facebook-field-guide-to-machine-learning-video-series/)
-## 1. Problem definition
+### 1. Problem definition
 
-## 2. Data
+### 2. Data
 
-## 3. Evaluation
+### 3. Evaluation
 
-4. Features
+### 4. Features
 
-5. Model
+### 5. Model
 
-6. Experimentation
+### 6. Experimentation
