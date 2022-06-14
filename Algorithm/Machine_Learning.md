@@ -4,6 +4,8 @@
 
 * [SVM](https://medium.com/machine-learning-101/chapter-2-svm-support-vector-machine-theory-f0812effc72)
 
+* [K-mean](https://www.analyticsvidhya.com/blog/2019/08/comprehensive-guide-k-means-clustering/)
+
 * [R](https://github.com/ChenshuLiu/Machine-Learning-in-R)
 
 * [Introducing the Facebook Field Guide to Machine Learning video series](https://research.facebook.com/blog/2018/05/the-facebook-field-guide-to-machine-learning-video-series/)
