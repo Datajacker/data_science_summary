@@ -16,3 +16,23 @@ class Solution(object):
                 return False
             
         return True   
+
+# calculate the maximum return of investment
+
+def calculate_best_return(lis):
+    if len(lis) < 2:
+        return 0
+    else:
+        lis_final = [0]
+        a, b = 1, 2
+        for idx, i in enumerate(lis):
+            for j in lis[idx+1:]:
+                if j-i > max(lis_final) :
+                    a,b = i,j
+                lis_final.append(j-i)
+        if max(lis_final) > 0:
+            return ("The maximum return is {} from number {} and {}.".format(max(lis_final), a, b))
+        else:
+            return 0
+
+        
