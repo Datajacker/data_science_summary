@@ -18,7 +18,8 @@ class Solution(object):
         return True   
 
 # calculate the maximum return of investment
-
+# The input will be a list of unsorted numbers. 
+# we want to get the biggest increase between the number before and after
 def calculate_best_return(lis):
     if len(lis) < 2:
         return 0
@@ -35,4 +36,9 @@ def calculate_best_return(lis):
         else:
             return 0
 
-        
+import random
+randomlist = []
+for i in range(0,20):
+    n = random.randint(1,30)
+    randomlist.append(n)
+print(randomlist)       
