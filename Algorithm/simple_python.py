@@ -74,3 +74,40 @@ class Solution:
             if complement in hashmap:
                 return [i, hashmap[complement]]
             hashmap[nums[i]] = i
+
+# leetcode 704. Binary Search
+# Given an array of integers nums which is sorted in ascending order, and an integer target, 
+# write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
+
+# You must write an algorithm with O(log n) runtime complexity.
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left, right = 0, len(nums)-1
+        while left <= right:
+            pivot = left + (right-left)//2
+            if nums[pivot] == target:
+                return pivot
+            if target < nums[pivot]:
+                right = pivot-1
+            else:
+                left = pivot+1
+        return -1
+
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+        if left == right:
+            return 0
+
+        while True:
+            cur = (left + right) // 2
+            v = nums[cur]
+            if v == target:
+                return cur
+            elif left == cur:
+                return -1
+            elif v < target:
+                left = cur
+            elif v > target:
+                right = cur
