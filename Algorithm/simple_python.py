@@ -97,8 +97,8 @@ class Solution:
     def search(self, nums: List[int], target: int) -> int:
         left = 0
         right = len(nums)
-        if left == right:
-            return 0
+        # if left == right:
+        #     return 0
 
         while True:
             cur = (left + right) // 2
@@ -111,3 +111,79 @@ class Solution:
                 left = cur
             elif v > target:
                 right = cur
+
+
+# 278. First Bad Version
+# You are a product manager and currently leading a team to develop a new product. Unfortunately, 
+# the latest version of your product fails the quality check. Since each version is developed based 
+# on the previous version, all the versions after a bad version are also bad.
+
+# Suppose you have n versions [1, 2, ..., n] and you want to find out the first bad one, 
+# which causes all the following ones to be bad.
+
+# You are given an API bool isBadVersion(version) which returns whether version is bad. 
+# Implement a function to find the first bad version. You should minimize the number of calls to the API.
+
+# The isBadVersion API is already defined for you.
+# def isBadVersion(version: int) -> bool:
+
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        left, right = 1 , n
+        
+        if isBadVersion(1):
+            return 1
+        
+        while left < right:
+            mid = (left + right)//2
+            if isBadVersion(mid):
+                right = mid
+            else:
+                left = mid +1
+        
+        return left
+
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        left, right = 1 , n
+        
+        if isBadVersion(1):
+            return 1
+        
+        while left <= right:
+            mid = (left + right)//2
+            if isBadVersion(mid):
+                right = mid
+            else:
+                left = mid
+            if left == right -1:
+                return right
+
+
+class Solution:
+    def firstBadVersion(self, n: int) -> int:
+        if isBadVersion(1):
+            return 1
+
+        left = 1
+        right = n
+        while left <= right:
+            pivot = (left + right) // 2
+            if isBadVersion(pivot) == True and isBadVersion(pivot - 1) == False:
+                return pivot
+            elif isBadVersion(pivot) == True:
+                right = pivot - 1
+            else:
+                left = pivot + 1
+
+class Solution:
+        def firstBadVersion(self, n: int) -> int:
+        l=1
+        h=n
+        while(l<=h):
+            m=(l+h)//2
+            if(isBadVersion(m)):
+                h=m-1
+            else:
+                l=m+1
+        return l
