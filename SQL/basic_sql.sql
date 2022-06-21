@@ -325,3 +325,16 @@ from SurveyLog
 group by question_id
 order by sum(if(action = 'answer', 1, 0)) / sum(if(action = 'show', 1, 0)) desc, question_id asc
 limit 1
+
+# 580. Count Student Number in Departments
+# Write your MySQL query statement below
+with sorted as (
+select dept_id, count(student_id) as student_number
+from Student
+group by dept_id)
+
+select a.dept_name, IFNULL(b.student_number, 0) as student_number
+from Department a
+left join sorted b
+on a.dept_id = b.dept_id
+order by student_number desc
