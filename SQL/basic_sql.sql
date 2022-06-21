@@ -338,3 +338,15 @@ from Department a
 left join sorted b
 on a.dept_id = b.dept_id
 order by student_number desc
+
+# 584. Find Customer Referee
+# Write your MySQL query statement below
+SELECT name FROM customer WHERE referee_Id <> 2 or referee_Id is null;
+# how to deal with null value
+SELECT name 
+FROM Customer
+WHERE COALESCE(referee_id, 0) != 2;
+
+SELECT name
+FROM customer
+WHERE IFNULL(referee_id, 0) <> 2
