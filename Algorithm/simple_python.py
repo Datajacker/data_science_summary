@@ -260,3 +260,31 @@ class Solution:
         self.reverse(nums, 0, n - 1)
         self.reverse(nums, 0, k - 1)
         self.reverse(nums, k, n - 1)
+
+
+# 283. Move Zeroes
+# Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+# Note that you must do this in-place without making a copy of the array.
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        j = 0
+        for i, num in enumerate(nums):
+            if num != 0: 
+                nums[j] = num
+                j += 1
+        nums[j:] = [0] * (len(nums) - j)
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        l=0
+        for r in range(len(nums)):
+            if nums[r]:
+                nums[l],nums[r] = nums[r],nums[l]
+                l+=1
