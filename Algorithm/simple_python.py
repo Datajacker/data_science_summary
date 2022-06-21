@@ -210,3 +210,38 @@ class Solution:
     def sortedSquares(self, nums: List[int]) -> List[int]:
 
           return sorted(x*x for x in nums)
+
+# 189. Rotate Array
+# Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+# Approach 1: Brute Force
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        # speed up the rotation
+        k %= len(nums)
+
+        for i in range(k):
+            previous = nums[-1]
+            for j in range(len(nums)):
+                nums[j], previous = previous, nums[j]
+
+# Approach 2: Using Extra Array
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        n = len(nums)
+        a = [0] * n
+        for i in range(n):
+            a[(i + k) % n] = nums[i]
+            
+        nums[:] = a
+
+# replace with extra array
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+#         # speed up the rotation
+        k %= len(nums)
+       
+        a = nums[-k:]
+        b = nums[:len(nums)-k]
+        nums[:k] = a 
+        nums[k:] = b
