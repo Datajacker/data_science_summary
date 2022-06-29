@@ -312,3 +312,18 @@ class Solution:
                 helper(left + 1, right - 1)
 
         helper(0, len(s) - 1)
+
+# 557. Reverse Words in a String III
+# Given a string s, reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        """
+        :type s: str
+        :rtype: str
+        """
+        temp = s.split(" ")
+        result = ""
+        for word in temp:
+            word = word[::-1]
+            result += word + " "
+        return result[:-1]
