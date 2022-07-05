@@ -350,3 +350,25 @@ WHERE COALESCE(referee_id, 0) != 2;
 SELECT name
 FROM customer
 WHERE IFNULL(referee_id, 0) <> 2
+
+-- 585. Investments in 2016
+select round(sum(tiv_2016), 2) as TIV_2016
+from
+     (select PID, TIV_2015, TIV_2016, LAT, LON,
+     COUNT(TIV_2015) OVER (PARTITION BY TIV_2015 ) AS Total_TIV_2015
+     from insurance) t1
+left join
+     (select PID, LAT, LON,
+     COUNT(*) OVER (PARTITION BY LAT, LON ) AS unique_city
+     from insurance) t2
+on t1.PID = t2.PID
+     where Total_TIV_2015 > 1 and unique_city = 1
+
+select
+    round(sum(tiv_2016),2) as 'TIV_2016'
+from 
+    insurance i1
+where
+    i1.tiv_2015 in (select i2.tiv_2015 from insurance i2 where i1.pid != i2.pid) 
+and
+    (i1.lat, i1.lon) not in (select lat, lon from insurance i3 where i1.pid != i3.pid)
